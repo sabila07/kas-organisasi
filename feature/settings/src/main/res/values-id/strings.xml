@@ -69,5 +69,7 @@
     <string name="passphrase_label">Frasa sandi</string>
     <string name="restore_wrong_passphrase">Frasa sandi salah. Coba lagi.</string>
     <string name="continue_action">Lanjutkan</string>
+    <string name="cancel">Batal</string>
+    <string name="about_us">Tentang Kami</string>
     <string name="cancel_action">Batal</string>
 </resources>
