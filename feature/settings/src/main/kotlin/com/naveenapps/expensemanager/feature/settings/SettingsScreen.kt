@@ -188,7 +188,7 @@ private fun SettingsScreenScaffoldView(
             },
             dismissButton = {
                 TextButton(onClick = { onAction.invoke(SettingAction.DismissRestoreConfirmation) }) {
-                    Text(text = stringResource(id = android.R.string.cancel))
+                    Text(text = stringResource(id = R.string.cancel_action))
                 }
             },
         )
@@ -215,82 +215,62 @@ private fun SettingsScreenScaffoldView(
     }
 
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             ExpenseManagerTopAppBar(
+                title = stringResource(id = R.string.settings),
                 navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
-                navigationBackClick = {
-                    onAction.invoke(SettingAction.ClosePage)
-                },
-                title = stringResource(R.string.settings),
+                onNavigationClick = { onAction.invoke(SettingAction.NavigateBack) },
             )
         },
-    ) { innerPadding ->
-        SettingsScreenContent(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp),
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+    ) { paddingValues ->
+        SettingsContent(
             state = state,
             onAction = onAction,
+            modifier = Modifier.padding(paddingValues),
         )
     }
 }
 
 @Composable
-private fun SettingsScreenContent(
-    modifier: Modifier = Modifier,
+private fun SettingsContent(
     state: SettingState,
     onAction: (SettingAction) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Spacer(modifier = Modifier.height(0.dp))
-
-        // Personalization — shapes how the app looks and feels, so it comes first.
+        // Personalization — currency, theme, and language are the settings most people change.
         SettingsSection(title = stringResource(R.string.personalization)) {
             AppCardView {
                 SettingRow(
+                    onClick = { onAction.invoke(SettingAction.OpenCurrencySelection) },
+                    title = stringResource(id = R.string.select_currency),
+                    subtitle = state.currency.name,
+                    icon = Icons.Outlined.Payments,
+                    showDivider = true,
+                )
+                SettingRow(
                     onClick = { onAction.invoke(SettingAction.ShowThemeSelection) },
                     title = stringResource(id = R.string.theme),
-                    subtitle = if (state.theme != null) {
-                        stringResource(id = state.theme.titleResId)
-                    } else {
-                        stringResource(id = R.string.system_default)
-                    },
+                    subtitle = state.theme?.let { stringResource(it.titleRes) } ?: stringResource(R.string.system_default),
                     icon = Icons.Outlined.Palette,
                     showDivider = true,
                 )
                 SettingRow(
                     onClick = { onAction.invoke(SettingAction.ShowLanguageSelection) },
-                    title = stringResource(
-                        id = com.naveenapps.expensemanager.feature.language.R.string.language,
-                    ),
-                    subtitle = if (state.locale != null) {
-                        stringResource(id = state.locale.titleResId)
-                    } else {
-                        stringResource(id = R.string.system_default)
-                    },
+                    title = stringResource(id = com.naveenapps.expensemanager.feature.language.R.string.language),
+                    subtitle = state.locale?.let { stringResource(it.titleRes) } ?: stringResource(R.string.system_default),
                     icon = Icons.Outlined.Language,
                     showDivider = true,
                 )
                 SettingRow(
-                    onClick = { onAction.invoke(SettingAction.OpenCurrencyEdit) },
-                    title = stringResource(id = R.string.currency),
-                    subtitle = "${state.currency.name} (${state.currency.symbol})",
-                    icon = Icons.Outlined.Payments,
-                )
-            }
-        }
-
-        // Notifications
-        SettingsSection(title = stringResource(R.string.notifications)) {
-            AppCardView {
-                SettingRow(
-                    onClick = { onAction.invoke(SettingAction.OpenNotification) },
+                    onClick = { onAction.invoke(SettingAction.OpenReminderSettings) },
                     title = stringResource(id = R.string.reminder_notification),
                     subtitle = stringResource(id = R.string.selected_daily_reminder_time),
                     icon = Icons.Outlined.EditNotifications,
@@ -298,7 +278,7 @@ private fun SettingsScreenContent(
             }
         }
 
-        // Defaults — affects daily data entry, so it's promoted out of "Advanced".
+        // Defaults — the few preferences that affect the first screen and recurring entries.
         SettingsSection(title = stringResource(R.string.defaults)) {
             AppCardView {
                 if (state.accounts.isNotEmpty() && state.selectedAccount != null) {
@@ -312,7 +292,6 @@ private fun SettingsScreenContent(
                         },
                     )
                 }
-
                 if (state.expenseCategories.isNotEmpty() && state.selectedExpenseCategory != null) {
                     DropdownSettingItem(
                         label = stringResource(id = R.string.default_expense_category),
@@ -328,7 +307,6 @@ private fun SettingsScreenContent(
                         },
                     )
                 }
-
                 if (state.incomeCategories.isNotEmpty() && state.selectedIncomeCategory != null) {
                     DropdownSettingItem(
                         label = stringResource(id = R.string.default_income_category),
@@ -624,7 +602,7 @@ private fun BackupPassphraseDialog(
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = stringResource(id = android.R.string.cancel))
+                Text(text = stringResource(id = R.string.cancel_action))
             }
         },
     )
