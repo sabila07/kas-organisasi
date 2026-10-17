@@ -1,73 +1,73 @@
 <resources>
 
-    <string name="app_name">Expense Manager</string>
+    <string name="app_name">Kas Organisasi</string>
 
 
     <!-- Failure message strings -->
 
-    <string name="select">Select</string>
+    <string name="select">Pilih</string>
 
-    <string name="title_home">Home</string>
-    <string name="view_all">View all</string>
-    <string name="accounts">Account</string>
+    <string name="title_home">Beranda</string>
+    <string name="view_all">Lihat semua</string>
+    <string name="accounts">Akun</string>
 
-    <string name="category_name">Category Name</string>
-
-
-    <string name="title_graph">Graph</string>
+    <string name="category_name">Nama Kategori</string>
 
 
-    <string name="currency">Currency</string>
-
-    <string name="choose_color">Choose color</string>
-    <string name="choose_icon">Choose Icon</string>
+    <string name="title_graph">Grafik</string>
 
 
-    <string name="categories">Categories</string>
+    <string name="currency">Mata Uang</string>
+
+    <string name="choose_color">Pilih warna</string>
+    <string name="choose_icon">Pilih Ikon</string>
+
+
+    <string name="categories">Kategori</string>
     <string name="total">Total</string>
-    <string name="transaction_summary">Summary</string>
-    <string name="clear_all">Clear All</string>
-    <string name="category_selection_message">Should select at least one category to proceed</string>
-    <string name="share">Share</string>
-    <string name="hello">Hello!</string>
-    <string name="guest">Guest</string>
-    <string name="balance">Balance</string>
+    <string name="transaction_summary">Ringkasan</string>
+    <string name="clear_all">Hapus Semua</string>
+    <string name="category_selection_message">Pilih minimal satu kategori untuk melanjutkan</string>
+    <string name="share">Bagikan</string>
+    <string name="hello">Halo!</string>
+    <string name="guest">Tamu</string>
+    <string name="balance">Saldo</string>
 
-    <string name="add_transaction">Add Transaction</string>
-    <string name="cancel">Cancel</string>
+    <string name="add_transaction">Tambah Transaksi</string>
+    <string name="cancel">Batal</string>
     <string name="ok">OK</string>
-    <string name="settings">Settings</string>
-    <string name="analysis">Analysis</string>
-    <string name="transaction">Transaction</string>
+    <string name="settings">Pengaturan</string>
+    <string name="analysis">Analisis</string>
+    <string name="transaction">Transaksi</string>
 
-    <string name="app_lock_title">Unlock Expense Manager</string>
-    <string name="app_lock_description">Verify your identity to continue</string>
-    <string name="app_lock_unlock">Unlock</string>
+    <string name="app_lock_title">Buka Kunci Kas Organisasi</string>
+    <string name="app_lock_description">Verifikasi identitas Anda untuk melanjutkan</string>
+    <string name="app_lock_unlock">Buka Kunci</string>
 
-    <string name="reminder_primer_title">Never miss an expense</string>
-    <string name="reminder_primer_description">Get one gentle reminder a day to log what you spent. It takes seconds and keeps your budgets accurate.</string>
-    <string name="reminder_primer_turn_on">Turn on daily reminder</string>
-    <string name="reminder_primer_not_now">Not now</string>
-    <string name="reminder_primer_footnote">You can change the time or turn it off anytime in Settings.</string>
-    <string name="first_save_title">First expense saved!</string>
-    <string name="first_save_description">Great start. Log your spending for 7 days and you will see exactly where your money goes.</string>
-    <string name="first_save_progress">Day %1$d of %2$d</string>
-    <string name="first_save_add_another">Add another</string>
-    <string name="first_save_done">Done</string>
-    <string name="shortcut_add_expense_short">Add expense</string>
-    <string name="shortcut_add_expense_long">Add a new expense</string>
+    <string name="reminder_primer_title">Jangan lewatkan satu pun pengeluaran</string>
+    <string name="reminder_primer_description">Dapatkan satu pengingat setiap hari untuk mencatat pengeluaran Anda. Hanya butuh beberapa detik dan anggaran Anda tetap akurat.</string>
+    <string name="reminder_primer_turn_on">Aktifkan pengingat harian</string>
+    <string name="reminder_primer_not_now">Nanti saja</string>
+    <string name="reminder_primer_footnote">Anda dapat mengubah waktunya atau mematikannya kapan saja di Pengaturan.</string>
+    <string name="first_save_title">Pengeluaran pertama tersimpan!</string>
+    <string name="first_save_description">Awal yang bagus. Catat pengeluaran selama 7 hari dan Anda akan tahu persis ke mana uang Anda pergi.</string>
+    <string name="first_save_progress">Hari %1$d dari %2$d</string>
+    <string name="first_save_add_another">Tambah lagi</string>
+    <string name="first_save_done">Selesai</string>
+    <string name="shortcut_add_expense_short">Tambah pengeluaran</string>
+    <string name="shortcut_add_expense_long">Tambah pengeluaran baru</string>
 
     <!-- Home-screen widget -->
-    <string name="widget_net">Net</string>
-    <string name="widget_net_this_period">Net this period</string>
-    <string name="widget_income">Income</string>
-    <string name="widget_expenses">Expenses</string>
-    <string name="widget_spent">Spent</string>
-    <string name="widget_recent">Recent</string>
-    <string name="widget_no_transactions">No transactions</string>
-    <string name="widget_refresh">Refresh</string>
-    <string name="widget_saved_percent">%1$s%% saved</string>
-    <string name="widget_spent_more_than_earned">Spent more than earned</string>
-    <string name="widget_income_spent_percent">%1$d%% of income spent</string>
-    <string name="widget_amount_saved">%1$s saved</string>
+    <string name="widget_net">Bersih</string>
+    <string name="widget_net_this_period">Bersih periode ini</string>
+    <string name="widget_income">Pemasukan</string>
+    <string name="widget_expenses">Pengeluaran</string>
+    <string name="widget_spent">Terpakai</string>
+    <string name="widget_recent">Terbaru</string>
+    <string name="widget_no_transactions">Tidak ada transaksi</string>
+    <string name="widget_refresh">Muat ulang</string>
+    <string name="widget_saved_percent">%1$s%% ditabung</string>
+    <string name="widget_spent_more_than_earned">Pengeluaran melebihi pemasukan</string>
+    <string name="widget_income_spent_percent">%1$d%% pemasukan terpakai</string>
+    <string name="widget_amount_saved">%1$s ditabung</string>
 </resources>
