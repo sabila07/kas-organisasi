@@ -1,3 +1,4 @@
+// Modified by RadarTech: default app locale changed to Indonesian (id), 2026.
 package com.naveenapps.expensemanager.core.data.repository
 
 import android.content.res.Resources
@@ -14,7 +15,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-const val SYSTEM_DEFAULT_LOCALE_TAG = ""
+const val SYSTEM_DEFAULT_LOCALE_TAG = "id"
 
 val defaultLocale = AppLocale(
     SYSTEM_DEFAULT_LOCALE_TAG,

@@ -1,3 +1,4 @@
+// Modified by RadarTech: default currency changed to Indonesian Rupiah (IDR), 2026.
 package com.naveenapps.expensemanager.core.data.repository
 
 import androidx.annotation.VisibleForTesting
@@ -13,15 +14,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 private const val MINUS_SYMBOL = "-"
-private const val DEFAULT_CURRENCY_SYMBOL = "$"
-private const val DEFAULT_CURRENCY_CODE = "USD"
-private const val DEFAULT_CURRENCY_NAME = "US Dollars"
+private const val DEFAULT_CURRENCY_SYMBOL = "Rp"
+private const val DEFAULT_CURRENCY_CODE = "IDR"
+private const val DEFAULT_CURRENCY_NAME = "Rupiah Indonesia"
 
 @VisibleForTesting
 val defaultCurrency = Currency(
     name = DEFAULT_CURRENCY_NAME,
     symbol = DEFAULT_CURRENCY_SYMBOL,
-    position = CurrencyPosition.SUFFIX,
+    position = CurrencyPosition.PREFIX,
     code = DEFAULT_CURRENCY_CODE,
 )
 
