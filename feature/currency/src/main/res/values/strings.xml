@@ -8,10 +8,12 @@
     <string name="currency">Mata Uang</string>
     <string name="select_currency">Pilih Mata Uang</string>
     <string name="currency_position">Posisi Mata Uang</string>
-    <string name="symbol">Simbol</string>
-    <string name="name">Nama</string>
-    <string name="country">Negara</string>
-    <string name="currency_code">Kode Mata Uang</string>
-    <string name="search">Cari</string>
-    <string name="no_currency_found">Tidak ada mata uang yang ditemukan</string>
+    <string name="currency_format">Format Mata Uang</string>
+    <string name="none">Tidak ada(1234.23)</string>
+    <string name="number_format">Format(1,23,423.13)</string>
+    <string name="selected_currency">Mata Uang Terpilih</string>
+    <string name="choose_preferred_currency">Pilih mata uang pilihan Anda</string>
+    <string name="where_symbol_appears">Di mana simbol muncul</string>
+    <string name="number_formatting_style">Gaya format angka</string>
+
 </resources>
