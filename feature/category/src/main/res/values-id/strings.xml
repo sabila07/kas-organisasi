@@ -22,7 +22,7 @@
     <string name="category_delete_error_message">Tidak dapat menghapus kategori ini</string>
     <string name="category_delete_message">Menghapus kategori ini juga akan menghapus semua transaksinya dan menghilangkannya dari anggaran mana pun yang menyertakannya. Tindakan ini tidak dapat dibatalkan.</string>
     <string name="default_category_name_locked_message">Ini adalah kategori bawaan, sehingga namanya mengikuti bahasa aplikasi yang Anda pilih dan tidak dapat diganti namanya.</string>
-    <string name="edit">Edit</string>
+    <string name="edit">Ubah</string>
     <string name="add_new">Tambah Baru</string>
 
     <string name="edit_category">Ubah Kategori</string>
