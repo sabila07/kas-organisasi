@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">Expense Manager</string>
+    <string name="app_name">Kas Organisasi</string>
 
 
     <!-- Failure message strings -->
@@ -40,7 +40,7 @@
     <string name="analysis">Analisis</string>
     <string name="transaction">Transaksi</string>
 
-    <string name="app_lock_title">Buka Kunci Expense Manager</string>
+    <string name="app_lock_title">Buka Kunci Kas Organisasi</string>
     <string name="app_lock_description">Verifikasi identitas Anda untuk melanjutkan</string>
     <string name="app_lock_unlock">Buka Kunci</string>
 

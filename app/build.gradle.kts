@@ -142,6 +142,7 @@ android {
 
     defaultConfig {
         applicationId = "com.naveenapps.expensemanager"
+        resourceConfigurations += listOf("id")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
