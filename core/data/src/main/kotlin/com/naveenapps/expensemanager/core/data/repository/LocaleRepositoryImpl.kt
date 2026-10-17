@@ -15,7 +15,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-const val SYSTEM_DEFAULT_LOCALE_TAG = "id"
+// Bahasa sistem menggunakan tag kosong agar tidak bentrok dengan Bahasa Indonesia.
+const val SYSTEM_DEFAULT_LOCALE_TAG = ""
+
+// Bahasa awal hanya digunakan jika pengguna belum pernah memilih bahasa.
+const val DEFAULT_APP_LOCALE_TAG = "id"
 
 val defaultLocale = AppLocale(
     SYSTEM_DEFAULT_LOCALE_TAG,
@@ -38,7 +42,7 @@ class LocaleRepositoryImpl(
     override suspend fun applyLocale() = withContext(dispatchers.io) {
         // Re-read whatever tag was last persisted and re-apply it on process start,
         // mirroring ApplyThemeUseCase's role for night mode.
-        val persistedTag = dataStore.getLocaleTag(defaultLocale.tag).first()
+        val persistedTag = dataStore.getLocaleTag(DEFAULT_APP_LOCALE_TAG).first()
         withContext(dispatchers.main) {
             applyLocaleTag(persistedTag)
         }
@@ -55,7 +59,7 @@ class LocaleRepositoryImpl(
 
     override fun getSelectedLocale(): Flow<AppLocale> {
         val locales = getLocales()
-        return dataStore.getLocaleTag(defaultLocale.tag).map { tag ->
+        return dataStore.getLocaleTag(DEFAULT_APP_LOCALE_TAG).map { tag ->
             locales.find { locale -> locale.tag == tag } ?: defaultLocale
         }
     }
