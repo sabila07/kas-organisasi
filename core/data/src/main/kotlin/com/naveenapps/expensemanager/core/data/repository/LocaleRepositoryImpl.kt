@@ -23,14 +23,13 @@ class LocaleRepositoryImpl(
     private val dispatchers: AppCoroutineDispatchers,
 ) : LocaleRepository {
 
-    override suspend fun saveLocale(locale: AppLocale): Boolean =
-        withContext(dispatchers.main) {
-            applyLocaleTag(DEFAULT_APP_LOCALE_TAG)
-            withContext(dispatchers.io) {
-                dataStore.setLocaleTag(DEFAULT_APP_LOCALE_TAG)
-            }
-            true
+    override suspend fun saveLocale(locale: AppLocale): Boolean = withContext(dispatchers.main) {
+        applyLocaleTag(DEFAULT_APP_LOCALE_TAG)
+        withContext(dispatchers.io) {
+            dataStore.setLocaleTag(DEFAULT_APP_LOCALE_TAG)
         }
+        true
+    }
 
     override suspend fun applyLocale() = withContext(dispatchers.io) {
         dataStore.setLocaleTag(DEFAULT_APP_LOCALE_TAG)
@@ -41,17 +40,13 @@ class LocaleRepositoryImpl(
 
     private fun applyLocaleTag(tag: String) {
         AppCompatDelegate.setApplicationLocales(
-            LocaleListCompat.forLanguageTags(tag)
+            LocaleListCompat.forLanguageTags(tag),
         )
     }
 
-    override fun getSelectedLocale(): Flow<AppLocale> {
-        return dataStore.getLocaleTag(DEFAULT_APP_LOCALE_TAG).map {
-            defaultLocale
-        }
+    override fun getSelectedLocale(): Flow<AppLocale> = dataStore.getLocaleTag(DEFAULT_APP_LOCALE_TAG).map {
+        defaultLocale
     }
 
-    override fun getLocales(): List<AppLocale> {
-        return listOf(defaultLocale)
-    }
+    override fun getLocales(): List<AppLocale> = listOf(defaultLocale)
 }
