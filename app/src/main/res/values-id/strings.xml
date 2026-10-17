@@ -24,7 +24,7 @@
 
 
     <string name="categories">Kategori</string>
-    <string name="total">Total</string>
+    <string name="total">Jumlah</string>
     <string name="transaction_summary">Ringkasan</string>
     <string name="clear_all">Hapus Semua</string>
     <string name="category_selection_message">Pilih minimal satu kategori untuk melanjutkan</string>
