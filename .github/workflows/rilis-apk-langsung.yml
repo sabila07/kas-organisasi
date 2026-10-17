@@ -25,21 +25,38 @@ jobs:
       - name: Siapkan Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Bangun APK
+      - name: Izinkan menjalankan Gradle
+        run: chmod +x ./gradlew
+
+      - name: Bangun APK debug
         run: ./gradlew --no-configuration-cache assembleDebug
 
-      - name: Siapkan nama APK
+      - name: Siapkan file APK langsung
+        shell: bash
         run: |
-          APK="$(find . -path '*/build/outputs/apk/debug/*.apk' -type f | head -n 1)"
+          set -euo pipefail
+          APK="$(find app/build/outputs/apk/debug -maxdepth 1 -type f -name '*.apk' | head -n 1)"
           test -n "$APK"
           cp "$APK" Kas-Organisasi.apk
+          ls -lh Kas-Organisasi.apk
 
-      - name: Terbitkan APK untuk unduhan langsung
+      - name: Simpan APK debug sebagai artefak cadangan
+        uses: actions/upload-artifact@v4
+        with:
+          name: Kas-Organisasi-debug-APK
+          path: Kas-Organisasi.apk
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Terbitkan file APK untuk unduhan langsung
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release delete latest --yes || true
-          gh release create latest Kas-Organisasi.apk \
-            --title "Kas Organisasi - APK terbaru" \
-            --notes "APK siap instal Android. Dibangun otomatis dari branch main." \
-            --latest
+          if gh release view latest >/dev/null 2>&1; then
+            gh release upload latest Kas-Organisasi.apk --clobber
+          else
+            gh release create latest Kas-Organisasi.apk \
+              --title "Kas Organisasi - APK debug terbaru" \
+              --notes "APK debug siap dipasang di Android. Dibangun otomatis dari branch main." \
+              --latest
+          fi
