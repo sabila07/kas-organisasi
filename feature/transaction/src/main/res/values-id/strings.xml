@@ -22,18 +22,18 @@
     <string name="unable_to_find_transaction">Tidak dapat menemukan transaksi</string>
     <string name="transaction_delete_error_message">Tidak dapat menghapus transaksi ini</string>
 
-    <string name="no_transactions_available">Tidak ada transaksi yang tersedia untuk periode yang dipilih.\nKetuk tombol + untuk mencatat transaksi Anda</string>
+    <string name="no_transactions_available">Tidak ada transaksi pada periode yang dipilih.\nKetuk tombol + untuk mencatat transaksi.</string>
     <string name="date">Tanggal</string>
     <string name="notes">Catatan</string>
     <string name="expense">Pengeluaran</string>
     <string name="income">Pemasukan</string>
     <string name="transfer">Transfer</string>
 
-    <string name="select_different_account">Pilih akun yang berbeda. Akun Dari dan Ke tidak boleh sama.</string>
-    <string name="amount_error_message">Silakan masukkan jumlah yang valid</string>
+    <string name="select_different_account">Pilih akun lain. Akun asal dan tujuan tidak boleh sama.</string>
+    <string name="amount_error_message">Masukkan jumlah yang valid</string>
     <string name="amount_should_greater_than_zero">Jumlah harus lebih besar dari nol</string>
-    <string name="transaction_create_success">Transaksi berhasil dibuat/diperbarui</string>
-    <string name="optional_details">Detail opsional</string>
+    <string name="transaction_create_success">Transaksi berhasil dibuat atau diperbarui</string>
+    <string name="optional_details">Detail tambahan (opsional)</string>
     <string name="select_account">Pilih Akun</string>
     <string name="select_category">Pilih Kategori</string>
     <string name="select_date">Pilih Tanggal</string>
@@ -44,8 +44,8 @@
     <string name="cancel">Batal</string>
     <string name="ok">OK</string>
     <string name="amount">Jumlah</string>
-    <string name="from_account">Dari Akun</string>
-    <string name="to_account">Ke Akun</string>
+    <string name="from_account">Akun Asal</string>
+    <string name="to_account">Akun Tujuan</string>
     <string name="attachments">Lampiran</string>
 
     <string name="edit_transaction">Ubah Transaksi</string>
@@ -57,26 +57,26 @@
     <string name="details">Detail</string>
 
     <string name="done">Selesai</string>
-    <string name="backspace">Hapus mundur</string>
+    <string name="backspace">Hapus karakter</string>
     <string name="add_transaction">Tambah Transaksi</string>
-    <string name="repeat">Ulangi</string>
+    <string name="repeat">Pengulangan</string>
     <string name="repeat_never">Tidak berulang</string>
-    <string name="repeat_daily">Harian</string>
-    <string name="repeat_weekly">Mingguan</string>
-    <string name="repeat_monthly">Bulanan</string>
-    <string name="repeat_yearly">Tahunan</string>
+    <string name="repeat_daily">Setiap hari</string>
+    <string name="repeat_weekly">Setiap minggu</string>
+    <string name="repeat_monthly">Setiap bulan</string>
+    <string name="repeat_yearly">Setiap tahun</string>
     <string name="repeat_next">Salinan berikutnya dicatat pada %1$s</string>
-    <string name="recurring_transactions">Transaksi berulang</string>
-    <string name="recurring_schedule">%1$s · berikutnya %2$s</string>
+    <string name="recurring_transactions">Transaksi Berulang</string>
+    <string name="recurring_schedule">%1$s · berikutnya pada %2$s</string>
     <string name="recurring_stop">Hentikan</string>
     <string name="recurring_stop_title">Hentikan pengulangan?</string>
-    <string name="recurring_stop_message">Tidak ada salinan baru yang dicatat. Transaksi yang sudah dicatat tetap ada.</string>
-    <string name="recurring_empty_title">Belum ada yang berulang</string>
-    <string name="recurring_empty_message">Saat menambahkan transaksi, pilih Harian, Mingguan, Bulanan, atau Tahunan di Ulangi dan transaksi akan dicatat otomatis.</string>
-    <string name="edit">Edit</string>
-    <string name="search_transactions_hint">Cari catatan, kategori, akun</string>
+    <string name="recurring_stop_message">Tidak ada transaksi baru yang akan dicatat otomatis. Transaksi yang sudah tercatat tetap disimpan.</string>
+    <string name="recurring_empty_title">Belum ada transaksi berulang</string>
+    <string name="recurring_empty_message">Saat menambahkan transaksi, pilih Harian, Mingguan, Bulanan, atau Tahunan pada bagian Ulangi agar transaksi dicatat otomatis.</string>
+    <string name="edit">Ubah</string>
+    <string name="search_transactions_hint">Cari catatan, kategori, atau akun</string>
     <string name="clear_search">Hapus pencarian</string>
-    <string name="no_matching_transactions">Tidak ada transaksi yang cocok dengan pencarian Anda</string>
+    <string name="no_matching_transactions">Tidak ada transaksi yang sesuai dengan pencarian</string>
     <string name="transaction_deleted">Transaksi dihapus</string>
     <string name="undo">Urungkan</string>
     <string name="search_transactions">Cari transaksi</string>
