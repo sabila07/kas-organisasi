@@ -13,7 +13,7 @@
     <string name="no_transactions_available">Tidak ada transaksi untuk periode yang dipilih.\\nKetuk tombol + untuk mencatat transaksi Anda</string>
     <string name="home">Beranda</string>
     <string name="transaction_create_message">Tambahkan pengeluaran, pemasukan, dan transfer Anda di sini.</string>
-    <string name="help">Bantuan & info</string>
+    <string name="help">Bantuan &amp; info</string>
     <string name="ok">OK</string>
     <string name="no_budget_for_month">Tidak ada %1$s</string>
     <string name="tap_to_set_spending_limit">Ketuk untuk menetapkan batas pengeluaran</string>
