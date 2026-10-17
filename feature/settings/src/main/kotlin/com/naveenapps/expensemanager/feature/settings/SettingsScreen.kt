@@ -215,62 +215,82 @@ private fun SettingsScreenScaffoldView(
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             ExpenseManagerTopAppBar(
-                title = stringResource(id = R.string.settings),
                 navigationIcon = Icons.AutoMirrored.Filled.ArrowBack,
-                onNavigationClick = { onAction.invoke(SettingAction.NavigateBack) },
+                navigationBackClick = {
+                    onAction.invoke(SettingAction.ClosePage)
+                },
+                title = stringResource(R.string.settings),
             )
         },
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-    ) { paddingValues ->
-        SettingsContent(
+    ) { innerPadding ->
+        SettingsScreenContent(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp),
             state = state,
             onAction = onAction,
-            modifier = Modifier.padding(paddingValues),
         )
     }
 }
 
 @Composable
-private fun SettingsContent(
+private fun SettingsScreenContent(
+    modifier: Modifier = Modifier,
     state: SettingState,
     onAction: (SettingAction) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        // Personalization — currency, theme, and language are the settings most people change.
+        Spacer(modifier = Modifier.height(0.dp))
+
+        // Personalization — shapes how the app looks and feels, so it comes first.
         SettingsSection(title = stringResource(R.string.personalization)) {
             AppCardView {
                 SettingRow(
-                    onClick = { onAction.invoke(SettingAction.OpenCurrencySelection) },
-                    title = stringResource(id = R.string.select_currency),
-                    subtitle = state.currency.name,
-                    icon = Icons.Outlined.Payments,
-                    showDivider = true,
-                )
-                SettingRow(
                     onClick = { onAction.invoke(SettingAction.ShowThemeSelection) },
                     title = stringResource(id = R.string.theme),
-                    subtitle = state.theme?.let { stringResource(it.titleRes) } ?: stringResource(R.string.system_default),
+                    subtitle = if (state.theme != null) {
+                        stringResource(id = state.theme.titleResId)
+                    } else {
+                        stringResource(id = R.string.system_default)
+                    },
                     icon = Icons.Outlined.Palette,
                     showDivider = true,
                 )
                 SettingRow(
                     onClick = { onAction.invoke(SettingAction.ShowLanguageSelection) },
-                    title = stringResource(id = com.naveenapps.expensemanager.feature.language.R.string.language),
-                    subtitle = state.locale?.let { stringResource(it.titleRes) } ?: stringResource(R.string.system_default),
+                    title = stringResource(
+                        id = com.naveenapps.expensemanager.feature.language.R.string.language,
+                    ),
+                    subtitle = if (state.locale != null) {
+                        stringResource(id = state.locale.titleResId)
+                    } else {
+                        stringResource(id = R.string.system_default)
+                    },
                     icon = Icons.Outlined.Language,
                     showDivider = true,
                 )
                 SettingRow(
-                    onClick = { onAction.invoke(SettingAction.OpenReminderSettings) },
+                    onClick = { onAction.invoke(SettingAction.OpenCurrencyEdit) },
+                    title = stringResource(id = R.string.currency),
+                    subtitle = "${state.currency.name} (${state.currency.symbol})",
+                    icon = Icons.Outlined.Payments,
+                )
+            }
+        }
+
+        // Notifications
+        SettingsSection(title = stringResource(R.string.notifications)) {
+            AppCardView {
+                SettingRow(
+                    onClick = { onAction.invoke(SettingAction.OpenNotification) },
                     title = stringResource(id = R.string.reminder_notification),
                     subtitle = stringResource(id = R.string.selected_daily_reminder_time),
                     icon = Icons.Outlined.EditNotifications,
@@ -278,7 +298,7 @@ private fun SettingsContent(
             }
         }
 
-        // Defaults — the few preferences that affect the first screen and recurring entries.
+        // Defaults — affects daily data entry, so it's promoted out of "Advanced".
         SettingsSection(title = stringResource(R.string.defaults)) {
             AppCardView {
                 if (state.accounts.isNotEmpty() && state.selectedAccount != null) {
@@ -292,6 +312,7 @@ private fun SettingsContent(
                         },
                     )
                 }
+
                 if (state.expenseCategories.isNotEmpty() && state.selectedExpenseCategory != null) {
                     DropdownSettingItem(
                         label = stringResource(id = R.string.default_expense_category),
@@ -307,6 +328,7 @@ private fun SettingsContent(
                         },
                     )
                 }
+
                 if (state.incomeCategories.isNotEmpty() && state.selectedIncomeCategory != null) {
                     DropdownSettingItem(
                         label = stringResource(id = R.string.default_income_category),
@@ -602,7 +624,7 @@ private fun BackupPassphraseDialog(
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = stringResource(id = R.string.cancel_action))
+                Text(text = stringResource(id = android.R.string.cancel))
             }
         },
     )
