@@ -12,7 +12,7 @@
     <string name="transaction">Transaksi</string>
     <string name="no_transactions_available">Tidak ada transaksi yang tersedia untuk periode yang dipilih.\nKetuk tombol + untuk mencatat transaksi Anda</string>
     <string name="home">Beranda</string>
-    <string name="transaction_create_message">"Catat pengeluaran, pemasukan, dan transfer Anda di sini. "</string>
+    <string name="transaction_create_message">Catat pengeluaran, pemasukan, dan transfer Anda di sini.</string>
     <string name="help"><![CDATA[Bantuan & info]]></string>
     <string name="ok">OK</string>
     <string name="no_budget_for_month">Tidak Ada %1$s</string>
