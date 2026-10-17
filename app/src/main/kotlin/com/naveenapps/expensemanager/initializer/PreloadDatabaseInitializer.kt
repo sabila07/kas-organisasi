@@ -4,7 +4,11 @@ import android.content.Context
 import androidx.startup.Initializer
 import com.naveenapps.expensemanager.core.data.R as CategoryStringsR
 import com.naveenapps.expensemanager.core.domain.usecase.account.AddAccountUseCase
+import com.naveenapps.expensemanager.core.domain.usecase.account.GetAllAccountsUseCase
+import com.naveenapps.expensemanager.core.domain.usecase.account.UpdateAccountUseCase
 import com.naveenapps.expensemanager.core.domain.usecase.category.AddCategoryUseCase
+import com.naveenapps.expensemanager.core.domain.usecase.category.GetAllCategoryUseCase
+import com.naveenapps.expensemanager.core.domain.usecase.category.UpdateCategoryUseCase
 import com.naveenapps.expensemanager.core.domain.usecase.settings.onboarding.GetPreloadStatusUseCase
 import com.naveenapps.expensemanager.core.domain.usecase.settings.onboarding.SetPreloadStatusUseCase
 import com.naveenapps.expensemanager.core.model.Account
@@ -17,13 +21,14 @@ import java.util.Date
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.core.context.GlobalContext
 
 val BASE_CATEGORY_LIST = listOf(
     Category(
         id = "1",
-        name = "Clothing",
+        name = "Pakaian",
         type = CategoryType.EXPENSE,
         storedIcon = StoredIcon(
             name = "apparel",
@@ -35,7 +40,7 @@ val BASE_CATEGORY_LIST = listOf(
     ),
     Category(
         id = "2",
-        name = "Entertainment",
+        name = "Hiburan",
         type = CategoryType.EXPENSE,
         storedIcon = StoredIcon(
             name = "sports_esports",
@@ -47,7 +52,7 @@ val BASE_CATEGORY_LIST = listOf(
     ),
     Category(
         id = "3",
-        name = "Food",
+        name = "Makanan",
         type = CategoryType.EXPENSE,
         storedIcon = StoredIcon(
             name = "restaurant",
@@ -59,7 +64,7 @@ val BASE_CATEGORY_LIST = listOf(
     ),
     Category(
         id = "4",
-        name = "Health",
+        name = "Kesehatan",
         type = CategoryType.EXPENSE,
         storedIcon = StoredIcon(
             name = "home_health",
@@ -71,7 +76,7 @@ val BASE_CATEGORY_LIST = listOf(
     ),
     Category(
         id = "5",
-        name = "Leisure",
+        name = "Rekreasi",
         type = CategoryType.EXPENSE,
         storedIcon = StoredIcon(
             name = "flights_and_hotels",
@@ -83,7 +88,7 @@ val BASE_CATEGORY_LIST = listOf(
     ),
     Category(
         id = "6",
-        name = "Shopping",
+        name = "Belanja",
         type = CategoryType.EXPENSE,
         storedIcon = StoredIcon(
             name = "shopping_cart",
@@ -95,7 +100,7 @@ val BASE_CATEGORY_LIST = listOf(
     ),
     Category(
         id = "7",
-        name = "Transportation",
+        name = "Transportasi",
         type = CategoryType.EXPENSE,
         storedIcon = StoredIcon(
             name = "travel",
@@ -107,7 +112,7 @@ val BASE_CATEGORY_LIST = listOf(
     ),
     Category(
         id = "8",
-        name = "Utilities",
+        name = "Utilitas",
         type = CategoryType.EXPENSE,
         storedIcon = StoredIcon(
             name = "other_admission",
@@ -119,7 +124,7 @@ val BASE_CATEGORY_LIST = listOf(
     ),
     Category(
         id = "9",
-        name = "Salary",
+        name = "Gaji",
         type = CategoryType.INCOME,
         storedIcon = StoredIcon(
             name = "savings",
@@ -131,7 +136,7 @@ val BASE_CATEGORY_LIST = listOf(
     ),
     Category(
         id = "10",
-        name = "Gift",
+        name = "Hadiah",
         type = CategoryType.INCOME,
         storedIcon = StoredIcon(
             name = "featured_seasonal_and_gifts",
@@ -143,7 +148,7 @@ val BASE_CATEGORY_LIST = listOf(
     ),
     Category(
         id = "11",
-        name = "Coupons",
+        name = "Kupon",
         type = CategoryType.INCOME,
         storedIcon = StoredIcon(
             name = "redeem",
@@ -158,7 +163,7 @@ val BASE_CATEGORY_LIST = listOf(
 val BASE_ACCOUNT_LIST = listOf(
     Account(
         "1",
-        "Cash",
+        "Uang Tunai",
         AccountType.REGULAR,
         storedIcon = StoredIcon(
             name = "savings",
@@ -169,7 +174,7 @@ val BASE_ACCOUNT_LIST = listOf(
     ),
     Account(
         "2",
-        "Card-xxx",
+        "Kartu Kredit",
         AccountType.CREDIT,
         storedIcon = StoredIcon(
             name = "credit_card",
@@ -180,7 +185,7 @@ val BASE_ACCOUNT_LIST = listOf(
     ),
     Account(
         "3",
-        "Bank Account",
+        "Rekening Bank",
         AccountType.REGULAR,
         storedIcon = StoredIcon(
             name = "account_balance",
@@ -197,7 +202,11 @@ class PreloadDatabaseInitializer : Initializer<Unit> {
         val getPreloadStatusUseCase: GetPreloadStatusUseCase = GlobalContext.get().get()
         val setPreloadStatusUseCase: SetPreloadStatusUseCase = GlobalContext.get().get()
         val addAccountUseCase: AddAccountUseCase = GlobalContext.get().get()
+        val getAllAccountsUseCase: GetAllAccountsUseCase = GlobalContext.get().get()
+        val updateAccountUseCase: UpdateAccountUseCase = GlobalContext.get().get()
         val addCategoryUseCase: AddCategoryUseCase = GlobalContext.get().get()
+        val getAllCategoryUseCase: GetAllCategoryUseCase = GlobalContext.get().get()
+        val updateCategoryUseCase: UpdateCategoryUseCase = GlobalContext.get().get()
 
         CoroutineScope(SupervisorJob() + Dispatchers.Main).launch {
             val isPreloaded = getPreloadStatusUseCase.invoke()
@@ -212,6 +221,53 @@ class PreloadDatabaseInitializer : Initializer<Unit> {
                 }
 
                 setPreloadStatusUseCase.invoke(true)
+            } else {
+                // Translate only unchanged built-in seed names. This preserves custom names,
+                // account balances, categories, and all existing transactions.
+                val accountNameTranslations = mapOf(
+                    "1" to ("Cash" to "Uang Tunai"),
+                    "2" to ("Card-xxx" to "Kartu Kredit"),
+                    "3" to ("Bank Account" to "Rekening Bank"),
+                )
+                val existingAccounts = getAllAccountsUseCase.invoke().first()
+                existingAccounts.forEach { account ->
+                    val translation = accountNameTranslations[account.id]
+                    if (translation != null && account.name == translation.first) {
+                        updateAccountUseCase.invoke(
+                            account.copy(name = translation.second, updatedOn = Date()),
+                        )
+                    }
+                }
+
+                val categoryNameTranslations = mapOf(
+                    "1" to ("Clothing" to "Pakaian"),
+                    "2" to ("Entertainment" to "Hiburan"),
+                    "3" to ("Food" to "Makanan"),
+                    "4" to ("Health" to "Kesehatan"),
+                    "5" to ("Leisure" to "Rekreasi"),
+                    "6" to ("Shopping" to "Belanja"),
+                    "7" to ("Transportation" to "Transportasi"),
+                    "8" to ("Utilities" to "Utilitas"),
+                    "9" to ("Salary" to "Gaji"),
+                    "10" to ("Gift" to "Hadiah"),
+                    "11" to ("Coupons" to "Kupon"),
+                )
+                val existingCategories = getAllCategoryUseCase.invoke().first()
+                existingCategories.forEach { category ->
+                    val translation = categoryNameTranslations[category.id]
+                    val translatedNameAlreadyExists = existingCategories.any {
+                        it.id != category.id && it.name.equals(translation?.second, ignoreCase = true)
+                    }
+                    if (
+                        translation != null &&
+                        category.name == translation.first &&
+                        !translatedNameAlreadyExists
+                    ) {
+                        updateCategoryUseCase.invoke(
+                            category.copy(name = translation.second, updatedOn = Date()),
+                        )
+                    }
+                }
             }
         }
     }
