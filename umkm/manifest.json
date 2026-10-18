@@ -1,0 +1,19 @@
+{
+  "name": "UMKM Kita — Kelola Usaha",
+  "short_name": "UMKM Kita",
+  "description": "Aplikasi pengelolaan usaha mikro, kecil, dan menengah.",
+  "lang": "id-ID",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f8f6",
+  "theme_color": "#0c6b58",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
