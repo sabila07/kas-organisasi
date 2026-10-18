@@ -1,0 +1,9 @@
+{
+  "appId": "id.radartech.umkmkita",
+  "appName": "UMKM Kita",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": false
+  }
+}
