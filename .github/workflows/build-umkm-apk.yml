@@ -1,0 +1,57 @@
+name: Build APK UMKM Kita
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - umkm-ui-prototype
+    paths:
+      - "umkm/**"
+      - ".github/workflows/build-umkm-apk.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-debug-apk:
+    name: Bangun APK Android (debug)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: umkm
+    steps:
+      - name: Ambil kode dari GitHub
+        uses: actions/checkout@v4
+
+      - name: Siapkan Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: umkm/package.json
+
+      - name: Siapkan Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Pasang dependensi
+        run: npm install
+
+      - name: Siapkan berkas tampilan
+        run: npm run build
+
+      - name: Buat proyek Android
+        run: npx cap add android
+
+      - name: Bangun APK debug
+        run: cd android && chmod +x gradlew && ./gradlew assembleDebug
+
+      - name: Simpan APK untuk diunduh
+        uses: actions/upload-artifact@v4
+        with:
+          name: UMKM-Kita-debug-APK
+          path: umkm/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14
