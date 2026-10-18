@@ -4,7 +4,8 @@
   "private": true,
   "description": "Tampilan awal aplikasi UMKM Kita",
   "scripts": {
-    "android:sync": "cap sync android",
+    "build": "mkdir -p www && cp index.html manifest.json icon.svg sw.js www/",
+    "android:sync": "npm run build && cap sync android",
     "android:open": "cap open android"
   },
   "dependencies": {
