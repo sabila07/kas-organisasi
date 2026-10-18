@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c6b58">
+  <meta name="description" content="Pratinjau tampilan aplikasi UMKM Kita untuk membantu mengelola usaha.">
+  <title>UMKM Kita — Kelola Usaha</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <style>
+    :root{--green:#0c6b58;--green-dark:#084c40;--green-soft:#e8f5f0;--orange:#f6a544;--ink:#172b28;--muted:#75837f;--line:#e9efec;--bg:#f5f8f6;--white:#fff;--red:#d95b54;--blue:#4388be;--shadow:0 8px 26px rgba(19,62,52,.07)}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+    button,input{font:inherit}button{cursor:pointer}
+    .app{max-width:1120px;min-height:100vh;margin:0 auto;display:grid;grid-template-columns:228px minmax(0,1fr)}
+    .sidebar{background:var(--white);border-right:1px solid var(--line);padding:25px 17px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
+    .brand{display:flex;align-items:center;gap:10px;padding:0 8px 28px}
+    .brand-mark{width:42px;height:42px;border-radius:15px;background:var(--green);color:#fff;display:grid;place-items:center;font-size:22px;box-shadow:0 6px 14px #0c6b5829}
+    .brand-name{font-size:17px;font-weight:800;letter-spacing:-.5px}.brand-sub{font-size:10px;color:var(--muted);margin-top:3px;letter-spacing:1px;text-transform:uppercase}
+    .nav-label{padding:7px 12px 10px;color:#9aa7a1;font-size:10px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase}
+    .nav{display:grid;gap:5px}
+    .nav-btn{border:0;background:transparent;color:#66746e;display:flex;gap:12px;align-items:center;text-align:left;padding:12px 13px;border-radius:12px;font-size:13px;font-weight:650;width:100%;transition:.15s}
+    .nav-btn .ico{width:21px;text-align:center;font-size:17px}
+    .nav-btn:hover{background:#f4f8f5;color:var(--green)}
+    .nav-btn.active{background:var(--green-soft);color:var(--green);font-weight:800}
+    .sidebar-bottom{margin-top:auto}
+    .help-card{background:#f4f8f5;border-radius:15px;padding:15px;margin:12px 3px}
+    .help-card strong{font-size:12px;display:block;margin-bottom:6px}.help-card p{font-size:11px;line-height:1.5;color:var(--muted);margin:0 0 10px}
+    .help-card button{border:0;background:var(--green);color:#fff;padding:9px 11px;border-radius:9px;font-size:11px;font-weight:750}
+    .profile{padding:15px 7px 0;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px}
+    .avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#ffe8ca;color:#925117;font-size:15px;font-weight:800;flex-shrink:0}
+    .profile strong{font-size:12px;display:block}.profile small{color:var(--muted);font-size:10px;display:block;margin-top:3px}
+    main{min-width:0;padding:26px 30px 40px}
+    .mobile-brand{display:none}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:25px}
+    .eyebrow{font-size:11px;color:var(--muted);margin-bottom:7px}
+    h1{font-size:25px;letter-spacing:-.8px;margin:0;font-weight:850}
+    .top-actions{display:flex;gap:10px;align-items:center}
+    .date-pill{display:flex;align-items:center;gap:8px;color:#64746d;font-size:12px;background:#fff;border:1px solid var(--line);padding:10px 12px;border-radius:12px}
+    .circle-btn{height:39px;width:39px;border:1px solid var(--line);background:#fff;border-radius:12px;position:relative;font-size:17px;color:#40534c}
+    .dot{width:7px;height:7px;border-radius:50%;background:#ed796c;border:2px solid #fff;position:absolute;top:8px;right:8px}
+    .welcome{background:linear-gradient(112deg,#0b6654,#11836a);border-radius:21px;padding:24px 25px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:20px;position:relative;overflow:hidden;box-shadow:0 12px 28px #0b665422}
+    .welcome:after{content:"";position:absolute;width:200px;height:200px;border:35px solid #ffffff0d;border-radius:50%;right:8%;top:-100px}
+    .welcome-copy{position:relative;z-index:1}.welcome .small{font-size:12px;color:#d4eee6;margin-bottom:8px}
+    .welcome h2{font-size:23px;line-height:1.25;letter-spacing:-.6px;margin:0 0 9px}
+    .welcome p{font-size:12px;color:#d7eee6;margin:0;line-height:1.6;max-width:440px}
+    .welcome-action{position:relative;z-index:1;background:var(--orange);border:0;color:#3b2a13;font-size:12px;font-weight:800;border-radius:12px;padding:13px 15px;white-space:nowrap;box-shadow:0 5px 12px #00000010}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin:27px 0 13px;gap:12px}
+    .section-head h2{margin:0;font-size:15px;letter-spacing:-.2px}
+    .muted-link{border:0;background:transparent;color:var(--green);font-size:11px;font-weight:750;padding:5px}
+    .period-switch{display:flex;gap:4px;background:#eaf0ec;padding:4px;border-radius:10px}
+    .period-switch button{border:0;background:transparent;color:#7a8780;padding:7px 10px;border-radius:7px;font-size:10px;font-weight:750}
+    .period-switch button.active{background:#fff;color:var(--green);box-shadow:0 2px 7px #1e493c0c}
+    .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+    .stat{background:#fff;border:1px solid var(--line);border-radius:17px;padding:17px 17px 16px;min-width:0}
+    .stat-top{display:flex;justify-content:space-between;align-items:center;gap:7px;margin-bottom:14px}
+    .stat-icon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font-size:17px}
+    .stat-icon.green{background:#e5f5ee}.stat-icon.orange{background:#fff2df}.stat-icon.blue{background:#e8f2fb}
+    .stat-caption{font-size:11px;color:var(--muted)}
+    .stat-value{font-size:clamp(16px,2.3vw,23px);font-weight:850;letter-spacing:-.7px;overflow-wrap:anywhere}
+    .stat-foot{font-size:10px;margin-top:9px;color:#75837f}
+    .stat-foot strong{color:var(--green)}
+    .content-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(240px,.75fr);gap:16px;margin-top:24px}
+    .panel{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px;min-width:0}
+    .panel-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:16px}
+    .panel-title h3{font-size:13px;margin:0}
+    .panel-title span{font-size:10px;color:var(--muted)}
+    .quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+    .quick-btn{min-width:0;border:1px solid #edf2ef;background:#fbfdfb;border-radius:13px;padding:14px 7px 12px;display:flex;align-items:center;flex-direction:column;gap:9px;color:var(--ink);font-size:10px;font-weight:750;line-height:1.4;text-align:center}
+    .quick-btn:hover{border-color:#b9ded0;background:#f4fbf7}
+    .quick-ico{height:38px;width:38px;display:grid;place-items:center;border-radius:12px;font-size:19px}
+    .quick-ico.g{background:#e1f4eb}.quick-ico.o{background:#fff0da}.quick-ico.b{background:#e8f2ff}.quick-ico.p{background:#f4eafa}
+    .transactions{width:100%;border-collapse:collapse}
+    .transactions th{text-align:left;color:#93a09a;font-weight:700;font-size:9px;padding:0 0 11px;border-bottom:1px solid var(--line)}
+    .transactions td{padding:12px 0;border-bottom:1px solid #f0f3f1;font-size:10px;vertical-align:middle}
+    .transactions tr:last-child td{border-bottom:0;padding-bottom:1px}
+    .product-name{display:flex;align-items:center;gap:9px;font-weight:750;font-size:11px}
+    .product-emoji{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-size:17px;background:#fff0de}
+    .subtext{display:block;font-size:9px;color:var(--muted);font-weight:500;margin-top:4px}
+    .amount{font-weight:800;white-space:nowrap}.status{display:inline-block;border-radius:20px;padding:5px 7px;background:#e5f5ec;color:#27815b;font-size:9px;font-weight:800}
+    .mini-list{display:grid;gap:12px}
+    .mini-row{display:flex;align-items:center;gap:10px}
+    .mini-icon{width:37px;height:37px;border-radius:12px;display:grid;place-items:center;font-size:17px;flex-shrink:0}
+    .mini-copy{min-width:0;flex:1}.mini-copy strong{display:block;font-size:11px}.mini-copy span{display:block;font-size:10px;color:var(--muted);margin-top:4px}
+    .mini-value{font-size:11px;font-weight:850;white-space:nowrap}
+    .stock-bar{height:5px;background:#eff3f0;border-radius:20px;margin-top:8px;overflow:hidden}.stock-bar span{height:100%;display:block;background:var(--orange);border-radius:20px}
+    .disclaimer{font-size:10px;color:#8a9790;text-align:center;margin:22px 0 0;line-height:1.6}
+    .page-view{display:none}.page-view.active{display:block}.home-view.active{display:block}
+    .page-intro{background:#fff;border:1px solid var(--line);padding:22px;border-radius:17px;margin-top:16px}
+    .page-intro h2{font-size:20px;margin:0 0 8px}.page-intro p{color:var(--muted);font-size:12px;line-height:1.7;margin:0}
+    .menu-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+    .menu-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px;text-align:left;color:var(--ink);min-height:120px}
+    .menu-card:hover{border-color:#a5d4c2;transform:translateY(-1px)}
+    .menu-card .menu-card-icon{font-size:21px;margin-bottom:13px;display:block}
+    .menu-card strong{display:block;font-size:12px;margin-bottom:5px}.menu-card span:last-child{font-size:10px;color:var(--muted);line-height:1.5}
+    .placeholder{margin-top:15px;background:#fff;border:1px dashed #ccd9d2;border-radius:17px;padding:40px 20px;text-align:center}
+    .placeholder .big{font-size:32px;margin-bottom:10px}.placeholder h3{font-size:16px;margin:0 0 7px}.placeholder p{color:var(--muted);font-size:12px;max-width:390px;margin:0 auto;line-height:1.7}
+    .toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#173b32;color:#fff;padding:12px 16px;border-radius:12px;font-size:12px;box-shadow:var(--shadow);transition:.22s;z-index:10;max-width:calc(100vw - 32px);text-align:center}
+    .toast.show{transform:translate(-50%,0);opacity:1}
+    .mobile-nav{display:none}
+    @media(max-width:850px){.app{grid-template-columns:190px minmax(0,1fr)}main{padding:23px 20px 35px}.content-grid{grid-template-columns:1fr}.quick-grid{gap:8px}.stat{padding:14px}.welcome{padding:21px}.menu-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:620px){body{background:#f5f8f6}.app{display:block;min-height:100vh}.sidebar{display:none}main{padding:0 15px 100px}.mobile-brand{display:flex;align-items:center;gap:9px;padding:15px 0 13px}.mobile-brand .brand-mark{width:36px;height:36px;border-radius:12px;font-size:19px}.mobile-brand .brand-name{font-size:15px}.topbar{margin:0 -15px 15px;background:#fff;padding:14px 15px;border-bottom:1px solid var(--line)}h1{font-size:20px}.eyebrow{font-size:10px}.date-pill{display:none}.circle-btn{width:36px;height:36px}.welcome{border-radius:17px;padding:19px 17px;align-items:flex-start;gap:10px}.welcome h2{font-size:20px}.welcome p{font-size:11px;max-width:230px}.welcome-action{font-size:10px;padding:11px 10px;align-self:center}.section-head{margin:22px 0 11px}.section-head h2{font-size:14px}.stats{gap:8px}.stat{padding:12px 10px;border-radius:14px}.stat-top{margin-bottom:10px;align-items:flex-start}.stat-icon{width:30px;height:30px;font-size:14px;border-radius:10px}.stat-caption{font-size:9px;line-height:1.4}.stat-value{font-size:17px}.stat-foot{font-size:9px;line-height:1.4}.period-switch button{padding:6px 7px;font-size:9px}.content-grid{margin-top:19px;gap:13px}.panel{padding:14px;border-radius:15px}.panel-title h3{font-size:12px}.quick-grid{gap:7px}.quick-btn{font-size:9px;padding:10px 3px;border-radius:11px;gap:7px}.quick-ico{width:34px;height:34px;font-size:17px}.transactions th{font-size:8px}.transactions td{padding:10px 0;font-size:9px}.product-name{font-size:10px;gap:7px}.product-emoji{width:30px;height:30px}.status{font-size:8px;padding:4px 6px}.mini-copy strong,.mini-value{font-size:10px}.menu-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.menu-card{padding:14px;min-height:110px}.page-intro{padding:18px}.page-intro h2{font-size:18px}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:5;background:#ffffffed;backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));justify-content:space-around}.mobile-nav button{flex:1;display:flex;align-items:center;flex-direction:column;gap:4px;background:transparent;border:0;color:#8a9690;font-size:9px;padding:4px 0;font-weight:700}.mobile-nav button span{font-size:18px}.mobile-nav button.active{color:var(--green)}.mobile-nav button.active span{background:var(--green-soft);border-radius:10px;padding:4px 13px}.disclaimer{margin:18px 0 0;font-size:9px}.toast{bottom:82px}}
+    @media(max-width:360px){.welcome{display:block}.welcome-action{margin-top:14px}.stat-value{font-size:15px}.stat-foot{display:none}.transactions th:nth-child(2),.transactions td:nth-child(2){display:none}.transactions th:last-child,.transactions td:last-child{display:none}}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">🌿</div><div><div class="brand-name">UMKM Kita</div><div class="brand-sub">Teman Usaha Anda</div></div></div>
+      <div class="nav-label">Menu utama</div>
+      <nav class="nav" aria-label="Navigasi utama">
+        <button class="nav-btn active" data-page="beranda"><span class="ico">⌂</span>Beranda</button>
+        <button class="nav-btn" data-page="transaksi"><span class="ico">↔</span>Transaksi</button>
+        <button class="nav-btn" data-page="produk"><span class="ico">▦</span>Produk & Stok</button>
+        <button class="nav-btn" data-page="pelanggan"><span class="ico">♙</span>Pelanggan</button>
+        <button class="nav-btn" data-page="utang"><span class="ico">◷</span>Utang & Piutang</button>
+        <button class="nav-btn" data-page="laporan"><span class="ico">▤</span>Laporan</button>
+      </nav>
+      <div class="nav-label" style="margin-top:19px">Pengelolaan</div>
+      <nav class="nav" aria-label="Menu pengelolaan">
+        <button class="nav-btn" data-page="modal"><span class="ico">▣</span>Modal Usaha</button>
+        <button class="nav-btn" data-page="karyawan"><span class="ico">♧</span>Karyawan</button>
+        <button class="nav-btn" data-page="pengaturan"><span class="ico">⚙</span>Pengaturan</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><strong>Butuh bantuan?</strong><p>Pusat bantuan untuk menemani usaha Anda tumbuh.</p><button data-action="bantuan">Lihat bantuan ↗</button></div>
+        <div class="profile"><div class="avatar">U</div><div><strong>Pemilik Usaha</strong><small>Akun pratinjau</small></div></div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="mobile-brand"><div class="brand-mark">🌿</div><div><div class="brand-name">UMKM Kita</div><div class="brand-sub">Teman Usaha Anda</div></div></div>
+      <header class="topbar">
+        <div><div class="eyebrow">Minggu, 18 Oktober 2026</div><h1 id="page-heading">Beranda</h1></div>
+        <div class="top-actions"><div class="date-pill">▦ <span>Ringkasan usaha</span></div><button class="circle-btn" data-action="notifikasi" aria-label="Notifikasi">♧<span class="dot"></span></button><div class="avatar">U</div></div>
+      </header>
+
+      <section class="page-view home-view active" data-view="beranda">
+        <div class="welcome">
+          <div class="welcome-copy"><div class="small">Halo, Pemilik Usaha! 👋</div><h2>Usaha rapi,<br>hati lebih tenang.</h2><p>Pantau penjualan, stok barang, dan perkembangan usaha Anda dalam satu tempat.</p></div>
+          <button class="welcome-action" data-page="transaksi">+ Catat transaksi</button>
+        </div>
+
+        <div class="section-head"><h2>Ringkasan usaha</h2><div class="period-switch" aria-label="Pilih periode"><button class="active" data-period="Hari ini">Hari ini</button><button data-period="Minggu">Minggu</button><button data-period="Bulan">Bulan</button></div></div>
+        <div class="stats">
+          <article class="stat"><div class="stat-top"><span class="stat-caption">Total penjualan</span><span class="stat-icon green">💰</span></div><div class="stat-value" id="stat-sales">Rp 850.000</div><div class="stat-foot"><strong>↗ 12%</strong> dari periode lalu</div></article>
+          <article class="stat"><div class="stat-top"><span class="stat-caption">Transaksi</span><span class="stat-icon orange">🧾</span></div><div class="stat-value" id="stat-count">24</div><div class="stat-foot"><strong>+4 transaksi</strong> hari ini</div></article>
+          <article class="stat"><div class="stat-top"><span class="stat-caption">Produk aktif</span><span class="stat-icon blue">📦</span></div><div class="stat-value">38</div><div class="stat-foot"><strong>3 produk</strong> stok menipis</div></article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel"><div class="panel-title"><h3>Akses cepat</h3><span>Menu pilihan</span></div>
+            <div class="quick-grid">
+              <button class="quick-btn" data-action="tambah-penjualan"><span class="quick-ico g">🛍️</span>Penjualan</button>
+              <button class="quick-btn" data-action="tambah-produk"><span class="quick-ico o">📦</span>Tambah produk</button>
+              <button class="quick-btn" data-action="stok"><span class="quick-ico b">🗃️</span>Cek stok</button>
+              <button class="quick-btn" data-action="pengeluaran"><span class="quick-ico p">💸</span>Pengeluaran</button>
+            </div>
+          </section>
+          <section class="panel"><div class="panel-title"><h3>Perlu diperhatikan</h3><button class="muted-link" data-page="produk">Lihat semua</button></div>
+            <div class="mini-list">
+              <div class="mini-row"><div class="mini-icon" style="background:#fff1dd">⚠️</div><div class="mini-copy"><strong>Stok hampir habis</strong><span>3 produk perlu dicek</span></div><div class="mini-value">3</div></div>
+              <div class="mini-row"><div class="mini-icon" style="background:#e6f4ed">📒</div><div class="mini-copy"><strong>Piutang pelanggan</strong><span>Tagihan belum lunas</span></div><div class="mini-value">Rp 320 rb</div></div>
+              <div class="mini-row"><div class="mini-icon" style="background:#e8f2ff">📈</div><div class="mini-copy"><strong>Laporan mingguan</strong><span>Ringkasan usaha tersedia</span></div><button class="muted-link" data-page="laporan">Buka</button></div>
+            </div>
+          </section>
+        </div>
+
+        <div class="section-head"><h2>Transaksi terbaru</h2><button class="muted-link" data-page="transaksi">Lihat semua →</button></div>
+        <section class="panel">
+          <table class="transactions"><thead><tr><th>RINCIAN</th><th>WAKTU</th><th>JUMLAH</th><th>STATUS</th></tr></thead><tbody>
+            <tr><td><div class="product-name"><span class="product-emoji">☕</span><span>Kopi susu gula aren<span class="subtext">TRX-00124 · Tunai</span></span></div></td><td>14.25</td><td class="amount">Rp 25.000</td><td><span class="status">Selesai</span></td></tr>
+            <tr><td><div class="product-name"><span class="product-emoji" style="background:#e6f3e8">🍞</span><span>Roti tawar<span class="subtext">TRX-00123 · QRIS</span></span></div></td><td>13.50</td><td class="amount">Rp 18.000</td><td><span class="status">Selesai</span></td></tr>
+            <tr><td><div class="product-name"><span class="product-emoji" style="background:#f4eafa">🍜</span><span>Mie instan (2)<span class="subtext">TRX-00122 · Tunai</span></span></div></td><td>12.10</td><td class="amount">Rp 14.000</td><td><span class="status">Selesai</span></td></tr>
+          </tbody></table>
+        </section>
+        <p class="disclaimer">Ini adalah tampilan contoh. Angka dan transaksi hanya data ilustrasi, belum tersambung ke penyimpanan usaha.</p>
+      </section>
+
+      <section class="page-view" data-view="transaksi"><div class="page-intro"><h2>Transaksi</h2><p>Catat penjualan dan pengeluaran harian, lalu pantau riwayat transaksi usaha Anda.</p></div><div class="menu-cards"><button class="menu-card" data-action="tambah-penjualan"><span class="menu-card-icon">🛍️</span><strong>Catat penjualan</strong><span>Mulai catatan transaksi baru</span></button><button class="menu-card" data-action="pengeluaran"><span class="menu-card-icon">💸</span><strong>Catat pengeluaran</strong><span>Catat biaya operasional</span></button><button class="menu-card" data-action="riwayat"><span class="menu-card-icon">🧾</span><strong>Riwayat transaksi</strong><span>Lihat daftar transaksi</span></button></div><div class="placeholder"><div class="big">🧾</div><h3>Riwayat transaksi</h3><p>Daftar lengkap transaksi akan ditampilkan di sini setelah fitur pencatatan dan penyimpanan dibuat.</p></div></section>
+
+      <section class="page-view" data-view="produk"><div class="page-intro"><h2>Produk & Stok</h2><p>Kelola daftar produk, harga jual, kategori, dan jumlah persediaan barang.</p></div><div class="menu-cards"><button class="menu-card" data-action="tambah-produk"><span class="menu-card-icon">➕</span><strong>Tambah produk</strong><span>Siapkan data produk baru</span></button><button class="menu-card" data-action="stok"><span class="menu-card-icon">📦</span><strong>Daftar stok</strong><span>Pantau persediaan barang</span></button><button class="menu-card" data-action="kategori"><span class="menu-card-icon">🗂️</span><strong>Kategori produk</strong><span>Kelompokkan jenis produk</span></button></div><div class="placeholder"><div class="big">📦</div><h3>Daftar produk</h3><p>Menu produk sudah disiapkan. Form tambah, edit, hapus, dan sinkronisasi stok akan dibuat pada tahap berikutnya.</p></div></section>
+
+      <section class="page-view" data-view="pelanggan"><div class="page-intro"><h2>Pelanggan</h2><p>Simpan informasi pelanggan dan lihat riwayat pembelian mereka.</p></div><div class="menu-cards"><button class="menu-card" data-action="tambah-pelanggan"><span class="menu-card-icon">👤</span><strong>Tambah pelanggan</strong><span>Nama dan kontak pelanggan</span></button><button class="menu-card" data-action="daftar-pelanggan"><span class="menu-card-icon">👥</span><strong>Daftar pelanggan</strong><span>Kelola pelanggan usaha</span></button><button class="menu-card" data-action="pelanggan-setia"><span class="menu-card-icon">⭐</span><strong>Pelanggan setia</strong><span>Pelanggan yang sering berbelanja</span></button></div><div class="placeholder"><div class="big">👥</div><h3>Data pelanggan</h3><p>Data pelanggan nantinya dapat disimpan dan dicari dari menu ini.</p></div></section>
+
+      <section class="page-view" data-view="utang"><div class="page-intro"><h2>Utang & Piutang</h2><p>Pantau tagihan ke pemasok dan pembayaran pelanggan agar pencatatan keuangan lebih tertib.</p></div><div class="menu-cards"><button class="menu-card" data-action="piutang"><span class="menu-card-icon">📥</span><strong>Piutang pelanggan</strong><span>Tagihan yang belum dibayar</span></button><button class="menu-card" data-action="utang-usaha"><span class="menu-card-icon">📤</span><strong>Utang usaha</strong><span>Catatan tagihan kepada pemasok</span></button><button class="menu-card" data-action="catat-pembayaran"><span class="menu-card-icon">✅</span><strong>Catat pembayaran</strong><span>Perbarui status pembayaran</span></button></div><div class="placeholder"><div class="big">📒</div><h3>Catatan utang dan piutang</h3><p>Daftar tagihan dan status pembayarannya akan hadir di sini pada pengembangan berikutnya.</p></div></section>
+
+      <section class="page-view" data-view="laporan"><div class="page-intro"><h2>Laporan</h2><p>Lihat ringkasan penjualan, pengeluaran, keuntungan, dan pergerakan stok berdasarkan periode.</p></div><div class="menu-cards"><button class="menu-card" data-action="laporan-penjualan"><span class="menu-card-icon">📈</span><strong>Laporan penjualan</strong><span>Ringkasan penjualan harian dan bulanan</span></button><button class="menu-card" data-action="laporan-laba"><span class="menu-card-icon">💹</span><strong>Laba & rugi</strong><span>Gambaran pemasukan dan biaya</span></button><button class="menu-card" data-action="laporan-stok"><span class="menu-card-icon">📦</span><strong>Laporan stok</strong><span>Pergerakan persediaan barang</span></button><button class="menu-card" data-action="ekspor"><span class="menu-card-icon">📄</span><strong>Ekspor laporan</strong><span>Persiapan unduh data laporan</span></button></div><div class="placeholder"><div class="big">📊</div><h3>Laporan usaha</h3><p>Grafik dan laporan otomatis akan menggunakan data transaksi yang tersimpan setelah tahap backend selesai.</p></div></section>
+
+      <section class="page-view" data-view="modal"><div class="page-intro"><h2>Modal Usaha</h2><p>Catat modal awal dan tambahan modal agar perkembangan keuangan usaha mudah dipantau.</p></div><div class="menu-cards"><button class="menu-card" data-action="modal-awal"><span class="menu-card-icon">🏦</span><strong>Modal awal</strong><span>Catatan dana awal usaha</span></button><button class="menu-card" data-action="tambah-modal"><span class="menu-card-icon">➕</span><strong>Tambah modal</strong><span>Catat tambahan dana</span></button><button class="menu-card" data-action="riwayat-modal"><span class="menu-card-icon">📒</span><strong>Riwayat modal</strong><span>Lihat perubahan modal</span></button></div><div class="placeholder"><div class="big">🏦</div><h3>Pencatatan modal</h3><p>Fitur pencatatan modal akan dibuat setelah struktur data aplikasi ditentukan.</p></div></section>
+
+      <section class="page-view" data-view="karyawan"><div class="page-intro"><h2>Karyawan</h2><p>Menu untuk mengatur data karyawan dan pembagian akses, sesuai kebutuhan usaha.</p></div><div class="menu-cards"><button class="menu-card" data-action="tambah-karyawan"><span class="menu-card-icon">🧑‍🤝‍🧑</span><strong>Tambah karyawan</strong><span>Siapkan data anggota tim</span></button><button class="menu-card" data-action="daftar-karyawan"><span class="menu-card-icon">📋</span><strong>Daftar karyawan</strong><span>Kelola anggota tim</span></button><button class="menu-card" data-action="akses-karyawan"><span class="menu-card-icon">🔐</span><strong>Hak akses</strong><span>Rencana pengaturan izin pengguna</span></button></div><div class="placeholder"><div class="big">🧑‍🤝‍🧑</div><h3>Pengelolaan karyawan</h3><p>Form karyawan dan pengaturan hak akses belum diaktifkan pada versi tampilan awal.</p></div></section>
+
+      <section class="page-view" data-view="pengaturan"><div class="page-intro"><h2>Pengaturan</h2><p>Atur identitas usaha, preferensi aplikasi, keamanan akun, serta pencadangan data.</p></div><div class="menu-cards"><button class="menu-card" data-action="profil-usaha"><span class="menu-card-icon">🏪</span><strong>Profil usaha</strong><span>Nama usaha dan informasi kontak</span></button><button class="menu-card" data-action="keamanan"><span class="menu-card-icon">🔒</span><strong>Keamanan akun</strong><span>Rencana pengaturan keamanan</span></button><button class="menu-card" data-action="cadangan"><span class="menu-card-icon">☁️</span><strong>Cadangan data</strong><span>Persiapan ekspor dan pemulihan data</span></button><button class="menu-card" data-action="tentang"><span class="menu-card-icon">ℹ️</span><strong>Tentang aplikasi</strong><span>Informasi UMKM Kita</span></button></div><div class="placeholder"><div class="big">⚙️</div><h3>Pengaturan aplikasi</h3><p>Pengaturan akan diaktifkan bertahap. Versi saat ini hanya menampilkan rancangan antarmuka.</p></div></section>
+    </main>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Navigasi bawah">
+    <button class="active" data-page="beranda"><span>⌂</span>Beranda</button>
+    <button data-page="transaksi"><span>↔</span>Transaksi</button>
+    <button data-page="produk"><span>▦</span>Produk</button>
+    <button data-page="laporan"><span>▤</span>Laporan</button>
+    <button data-page="pengaturan"><span>☰</span>Lainnya</button>
+  </nav>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    const labels = {beranda:"Beranda",transaksi:"Transaksi",produk:"Produk & Stok",pelanggan:"Pelanggan",utang:"Utang & Piutang",laporan:"Laporan",modal:"Modal Usaha",karyawan:"Karyawan",pengaturan:"Pengaturan"};
+    function showPage(page){
+      if(page==="lainnya") page="pengaturan";
+      if(!document.querySelector('[data-view="'+page+'"]')) return;
+      document.querySelectorAll(".page-view").forEach(el=>el.classList.toggle("active",el.dataset.view===page));
+      document.querySelectorAll("[data-page]").forEach(el=>el.classList.toggle("active",el.dataset.page===page));
+      document.getElementById("page-heading").textContent=labels[page]||"UMKM Kita";
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+    document.addEventListener("click",event=>{
+      const pageButton=event.target.closest("[data-page]");
+      if(pageButton){showPage(pageButton.dataset.page);return;}
+      const period=event.target.closest("[data-period]");
+      if(period){
+        document.querySelectorAll("[data-period]").forEach(el=>el.classList.toggle("active",el===period));
+        const samples={"Hari ini":["Rp 850.000","24"],"Minggu":["Rp 4.250.000","118"],"Bulan":["Rp 16.800.000","482"]};
+        document.getElementById("stat-sales").textContent=samples[period.dataset.period][0];
+        document.getElementById("stat-count").textContent=samples[period.dataset.period][1];
+        toast("Ringkasan contoh untuk periode "+period.dataset.period.toLowerCase()+".");
+        return;
+      }
+      const action=event.target.closest("[data-action]");
+      if(action){
+        const actionLabels={
+          "tambah-penjualan":"Menu catat penjualan siap dirancang pada tahap berikutnya.",
+          "tambah-produk":"Menu tambah produk siap dirancang pada tahap berikutnya.",
+          "stok":"Menu pengecekan stok siap dirancang pada tahap berikutnya.",
+          "pengeluaran":"Menu catat pengeluaran siap dirancang pada tahap berikutnya.",
+          "notifikasi":"Belum ada notifikasi pada versi tampilan awal.",
+          "bantuan":"Pusat bantuan akan ditambahkan saat aplikasi dikembangkan.",
+          "tambah-pelanggan":"Form pelanggan akan dibuat pada tahap berikutnya.",
+          "daftar-pelanggan":"Daftar pelanggan akan ditampilkan setelah fitur penyimpanan tersedia.",
+          "pelanggan-setia":"Ringkasan pelanggan setia akan tersedia setelah transaksi tersimpan.",
+          "piutang":"Menu piutang akan diaktifkan pada tahap berikutnya.",
+          "utang-usaha":"Menu utang usaha akan diaktifkan pada tahap berikutnya.",
+          "catat-pembayaran":"Pencatatan pembayaran akan dibuat pada tahap berikutnya.",
+          "laporan-penjualan":"Laporan penjualan akan dibuat setelah data transaksi tersedia.",
+          "laporan-laba":"Laporan laba dan rugi akan dibuat setelah data keuangan tersedia.",
+          "laporan-stok":"Laporan stok akan dibuat setelah fitur produk tersedia.",
+          "ekspor":"Unduh laporan belum tersedia pada versi tampilan awal.",
+          "modal-awal":"Form modal awal akan dibuat pada tahap berikutnya.",
+          "tambah-modal":"Pencatatan tambahan modal akan dibuat pada tahap berikutnya.",
+          "riwayat-modal":"Riwayat modal akan tersedia setelah data tersimpan.",
+          "tambah-karyawan":"Form karyawan akan dibuat pada tahap berikutnya.",
+          "daftar-karyawan":"Daftar karyawan akan tersedia setelah fitur penyimpanan dibuat.",
+          "akses-karyawan":"Pengaturan hak akses akan dirancang pada tahap berikutnya.",
+          "profil-usaha":"Pengaturan profil usaha akan dibuat pada tahap berikutnya.",
+          "keamanan":"Pengaturan keamanan akan dibuat saat autentikasi tersedia.",
+          "cadangan":"Pencadangan data akan dibuat setelah penyimpanan terhubung.",
+          "tentang":"UMKM Kita — pratinjau antarmuka aplikasi pengelolaan usaha.",
+          "riwayat":"Riwayat transaksi akan tersedia setelah fitur pencatatan dibuat.",
+          "kategori":"Pengelolaan kategori produk akan dibuat pada tahap berikutnya."
+        };
+        toast(actionLabels[action.dataset.action]||"Fitur ini belum diaktifkan pada versi tampilan awal.");
+      }
+    });
+    let toastTimer;
+    function toast(message){
+      const el=document.getElementById("toast");el.textContent=message;el.classList.add("show");
+      clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove("show"),2800);
+    }
+    if("serviceWorker" in navigator && location.protocol!=="file:"){
+      window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+    }
+  </script>
+</body>
+</html>
